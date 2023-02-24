@@ -1,6 +1,6 @@
 # dijkstra-algorithm
 
-###Pseudo-code
+### Pseudo-code
 
 Set distance of start vertex from itself to 0
 Set distance of all other vertices from start = ∞ (infinity)
