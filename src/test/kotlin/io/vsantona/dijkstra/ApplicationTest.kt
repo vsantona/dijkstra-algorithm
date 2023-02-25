@@ -7,7 +7,7 @@ class ApplicationTest {
 
     @Test
     fun `given a graph with only a node, when apply dijkstra, then return 0`() {
-        var graph = Graph(listOf(Arrow(Node("A"), Node("A"), 2)))
+        var graph = Graph(listOf(Arc(Node("A"), Node("A"), 2)))
 
         var actual: Map<Node, Distance> = Dijkstra(graph).shortestDistances(Node("A"))
 
@@ -19,13 +19,13 @@ class ApplicationTest {
 
         var graph = Graph(
             listOf(
-                Arrow(Node("A"), Node("B"), 6),
-                Arrow(Node("A"), Node("D"), 1),
-                Arrow(Node("D"), Node("B"), 2),
-                Arrow(Node("D"), Node("E"), 1),
-                Arrow(Node("E"), Node("B"), 2),
-                Arrow(Node("B"), Node("C"), 5),
-                Arrow(Node("E"), Node("C"), 5),
+                Arc(Node("A"), Node("B"), 6),
+                Arc(Node("A"), Node("D"), 1),
+                Arc(Node("D"), Node("B"), 2),
+                Arc(Node("D"), Node("E"), 1),
+                Arc(Node("E"), Node("B"), 2),
+                Arc(Node("B"), Node("C"), 5),
+                Arc(Node("E"), Node("C"), 5),
             )
         )
 
@@ -44,14 +44,14 @@ class ApplicationTest {
 
         var graph = Graph(
             listOf(
-                Arrow(Node("A"), Node("B"), 6),
-                Arrow(Node("A"), Node("D"), 1),
-                Arrow(Node("D"), Node("B"), 2),
-                Arrow(Node("D"), Node("E"), 1),
-                Arrow(Node("E"), Node("B"), 1),
-                Arrow(Node("B"), Node("E"), 2),
-                Arrow(Node("B"), Node("C"), 3),
-                Arrow(Node("E"), Node("C"), 5),
+                Arc(Node("A"), Node("B"), 6),
+                Arc(Node("A"), Node("D"), 1),
+                Arc(Node("D"), Node("B"), 2),
+                Arc(Node("D"), Node("E"), 1),
+                Arc(Node("E"), Node("B"), 1),
+                Arc(Node("B"), Node("E"), 2),
+                Arc(Node("B"), Node("C"), 3),
+                Arc(Node("E"), Node("C"), 5),
             )
         )
 
@@ -70,14 +70,14 @@ class ApplicationTest {
 
         var graph = Graph(
             listOf(
-                Arrow(Node("A"), Node("B"), 6),
-                Arrow(Node("A"), Node("D"), 1),
-                Arrow(Node("D"), Node("B"), 2),
-                Arrow(Node("D"), Node("E"), 1),
-                Arrow(Node("E"), Node("B"), 2),
-                Arrow(Node("B"), Node("C"), 5),
-                Arrow(Node("E"), Node("C"), 5),
-                Arrow(Node("F"), Node("F"), 0),
+                Arc(Node("A"), Node("B"), 6),
+                Arc(Node("A"), Node("D"), 1),
+                Arc(Node("D"), Node("B"), 2),
+                Arc(Node("D"), Node("E"), 1),
+                Arc(Node("E"), Node("B"), 2),
+                Arc(Node("B"), Node("C"), 5),
+                Arc(Node("E"), Node("C"), 5),
+                Arc(Node("F"), Node("F"), 0),
             )
         )
 
@@ -91,8 +91,8 @@ class ApplicationTest {
         fun shortestDistances(startVertex: Node): Map<Node, Distance> {
 
             val nodesWithShortestDistance = mutableMapOf<Node, Distance>()
-            graph.arrows.map { it.from }.forEach { if (it == startVertex) nodesWithShortestDistance[it] = Distance(0) else nodesWithShortestDistance[it] = Distance(Int.MAX_VALUE) }
-            graph.arrows.map { it.to }.forEach { if (it == startVertex) nodesWithShortestDistance[it] = Distance(0) else nodesWithShortestDistance[it] = Distance(Int.MAX_VALUE) }
+            graph.arcs.map { it.from }.forEach { if (it == startVertex) nodesWithShortestDistance[it] = Distance(0) else nodesWithShortestDistance[it] = Distance(Int.MAX_VALUE) }
+            graph.arcs.map { it.to }.forEach { if (it == startVertex) nodesWithShortestDistance[it] = Distance(0) else nodesWithShortestDistance[it] = Distance(Int.MAX_VALUE) }
 
             val unvisited = nodesWithShortestDistance.toMutableMap()
 
@@ -100,7 +100,7 @@ class ApplicationTest {
 
                 val currentNode = unvisited.minBy { it.value.value }.key
 
-                graph.arrows.filter { it.from == currentNode }.forEach {
+                graph.arcs.filter { it.from == currentNode }.forEach {
                     val distanceFromVertex = nodesWithShortestDistance[currentNode]?.value?.plus(it.weight);
 
                     if (nodesWithShortestDistance[it.to]?.value!! > distanceFromVertex!!) nodesWithShortestDistance[it.to] = Distance(distanceFromVertex)
