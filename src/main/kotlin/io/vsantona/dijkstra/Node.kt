@@ -1,3 +1,3 @@
 package io.vsantona.dijkstra
 
-data class Node(val s: String)
+data class Node(val value: String)

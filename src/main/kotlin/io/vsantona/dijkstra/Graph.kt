@@ -1,3 +1,3 @@
 package io.vsantona.dijkstra
 
-data class Graph(val arcs: List<Arc>)
+class Graph(val arcs: List<Arc>, val nodes: List<Node>)
