@@ -52,6 +52,30 @@ class DijkstraTest {
                 Arc(B, E, 2),
                 Arc(B, C, 3),
                 Arc(E, C, 5),
+            ), listOf(A, D, E, B, C))
+
+        val actual = Dijkstra(graph).shortestPaths(A)
+
+        assertThat(actual.getShortestDistanceFrom(A)).isEqualTo(Distance(0))
+        assertThat(actual.getShortestDistanceFrom(B)).isEqualTo(Distance(3))
+        assertThat(actual.getShortestDistanceFrom(C)).isEqualTo(Distance(6))
+        assertThat(actual.getShortestDistanceFrom(D)).isEqualTo(Distance(1))
+        assertThat(actual.getShortestDistanceFrom(E)).isEqualTo(Distance(2))
+    }
+
+    @Test
+    fun `given another configuration full linked graph, when apply dijkstra with a different order, then return shortest distances`() {
+
+        val graph = Graph(
+            listOf(
+                Arc(A, B, 6),
+                Arc(A, D, 1),
+                Arc(D, B, 2),
+                Arc(D, E, 1),
+                Arc(E, B, 1),
+                Arc(B, E, 2),
+                Arc(B, C, 3),
+                Arc(E, C, 5),
             ), listOf(A, B, C, D, E))
 
         val actual = Dijkstra(graph).shortestPaths(A)

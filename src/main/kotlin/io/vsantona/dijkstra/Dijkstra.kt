@@ -5,15 +5,12 @@ class Dijkstra(private val graph: Graph) {
     private val mutableMap: MutableMap<Node, Distance> = mutableMapOf()
 
     init {
-        graph.arcs.map { it.from }.forEach { mutableMap[it] = Distance(Int.MAX_VALUE) }
-        graph.arcs.map { it.to }.forEach { mutableMap[it] = Distance(Int.MAX_VALUE) }
+        graph.nodes.map { it to Distance(Int.MAX_VALUE) }.toMap(mutableMap)
     }
 
     fun shortestPaths(startVertex: Node): Paths {
 
-        graph.arcs.filter { it.from == startVertex }.forEach { mutableMap[it.from] = Distance(0) }
-        graph.arcs.filter { it.to == startVertex }.forEach { mutableMap[it.to] = Distance(0) }
-
+        mutableMap[startVertex] = Distance(0)
         val unvisited = mutableMap.toMutableMap()
 
         while (unvisited.isNotEmpty()) {
